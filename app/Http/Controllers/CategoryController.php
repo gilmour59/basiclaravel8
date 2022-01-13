@@ -44,4 +44,20 @@ class CategoryController extends Controller
 
         return redirect()->back()->with('success', 'Category Inserted Successfully!');
     }
+
+    public function editCategory($id){
+
+        $category = Category::find($id);
+        return view('admin.category.edit')->with('category', $category);
+    }
+
+    public function updateCategory(Request $request, $id){
+
+        $category = Category::find($id)
+            ->update([
+                'category_name' => $request->category_name
+            ]);        
+
+        return redirect()->route('all.category')->with('success', 'Category Inserted Successfully!');
+    }
 }

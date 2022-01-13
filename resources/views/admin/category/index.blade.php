@@ -26,8 +26,9 @@
                             <thead>
                             <tr>                                                    
                                 <th scope="col">Category Name</th>
-                                <th scope="col">User Id</th>
-                                <th scope="col">Created At</th>                                
+                                <th scope="col">User</th>
+                                <th scope="col">Created At</th> 
+                                <th scope="col">Action</th>                                
                             </tr>
                             </thead>
                             <tbody>
@@ -35,12 +36,16 @@
                                     @foreach ($categories as $category)
                                         <tr>
                                             <th scope="row">{{ $category->category_name }}</th>
-                                            <td>{{ $category->user_id }}</td>
+                                            <td>{{ $category->user->name }}</td>
                                             @isset($category->created_at)
                                                 <td>{{ $category->created_at->diffForHumans() }}</td>    
                                             @else
                                                 <td><span class="text-danger">No Date Found!</span></td>
-                                            @endisset                                            
+                                            @endisset 
+                                            <td>
+                                                <a href="{{ route('edit.category', ['id' => $category->id]) }}" class="btn btn-info">Edit</a>    
+                                                <a href="" class="btn btn-danger">Delete</a>
+                                            </td>                                           
                                         </tr>                  
                                     @endforeach                                    
                                 @endisset                                      
