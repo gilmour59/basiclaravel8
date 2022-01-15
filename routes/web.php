@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Models\User;
@@ -28,12 +29,20 @@ Route::get('/home', function () {
 Route::get('/contact', [ContactController::class, 'index'])->middleware('check_age');
 
 Route::get('/category/all', [CategoryController::class, 'allCategories'])->name('all.category');
-
 Route::post('/category/add', [CategoryController::class, 'addCategory'])->name('store.category');
-
 Route::get('/category/edit/{id}', [CategoryController::class, 'editCategory'])->name('edit.category');
-
 Route::put('/category/update/{id}', [CategoryController::class, 'updateCategory'])->name('update.category');
+Route::get('/category/trash/{id}', [CategoryController::class, 'trashCategory'])->name('trash.category');
+Route::get('/category/restore/{id}', [CategoryController::class, 'restoreCategory'])->name('restore.category');
+Route::get('/category/delete/{id}', [CategoryController::class, 'deleteCategory'])->name('delete.category');
+
+Route::get('/brand/all', [BrandController::class, 'allBrands'])->name('all.brand');
+Route::post('/brand/add', [BrandController::class, 'addBrand'])->name('store.brand');
+Route::get('/brand/edit/{id}', [BrandController::class, 'editBrand'])->name('edit.brand');
+Route::put('/brand/update/{id}', [BrandController::class, 'updateBrand'])->name('update.brand');
+Route::get('/brand/trash/{id}', [BrandController::class, 'trashBrand'])->name('trash.brand');
+Route::get('/brand/restore/{id}', [BrandController::class, 'restoreBrand'])->name('restore.brand');
+Route::get('/brand/delete/{id}', [BrandController::class, 'deleteBrand'])->name('delete.brand');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
