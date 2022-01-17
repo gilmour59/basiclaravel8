@@ -50,8 +50,8 @@ Route::post('/multipic/add', [BrandController::class, 'addMultipic'])->name('sto
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
     //$users = User::all();
-    $users = DB::table('users')->get();
+    //$users = DB::table('users')->get();
 
-    return view('dashboard')->with("users", $users);
-
+    //return view('dashboard')->with("users", $users);
+    return view('admin.index');
 })->name('dashboard');
