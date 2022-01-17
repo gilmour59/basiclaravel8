@@ -44,6 +44,9 @@ Route::get('/brand/trash/{id}', [BrandController::class, 'trashBrand'])->name('t
 Route::get('/brand/restore/{id}', [BrandController::class, 'restoreBrand'])->name('restore.brand');
 Route::get('/brand/delete/{id}', [BrandController::class, 'deleteBrand'])->name('delete.brand');
 
+Route::get('/multipic/all', [BrandController::class, 'allMultipics'])->name('all.multipic');
+Route::post('/multipic/add', [BrandController::class, 'addMultipic'])->name('store.multipic');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
     //$users = User::all();

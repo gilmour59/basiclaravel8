@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Multipic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
 class BrandController extends Controller
 {
+    public function __construct(){
+        
+        $this->middleware('auth');
+    }
+
     public function allBrands(){
 
         $brands = Brand::latest()->paginate(5);        
@@ -113,5 +119,34 @@ class BrandController extends Controller
         Brand::onlyTrashed()->find($id)->forceDelete();
 
         return redirect()->route('all.brand')->with('success', 'Brand has been permanently deleted!');
+    }
+
+    public function allMultipics(){
+
+        $images = Multipic::all();
+        return view('admin.multipic.index')->with('images', $images);
+    }
+
+    public function addMultipic(Request $request){
+
+        $validatedData = $request->validate([
+            'image' => 'required',
+            'image.*' => 'mimes:jpeg,jpg,png'            
+        ]);
+
+        $images = $request->file('image');
+        
+        foreach ($images as $image){
+
+            $name_generate = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(300, 200)->save('image/multi/' . $name_generate);
+            $final_img = 'image/multi/' . $name_generate;
+    
+            $multipic = new Multipic;
+            $multipic->image = $final_img;        
+            $multipic->save();
+        }
+
+        return redirect()->route('all.multipic')->with('success', 'Pics Inserted Successfully!');
     }
 }
